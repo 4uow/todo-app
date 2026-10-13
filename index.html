@@ -20,37 +20,56 @@
 
   <link rel="stylesheet" href="./style.css">
 </head>
-<body class="light">
-  <img src="./images/bg-desktop-dark.jpg" alt="" class="bg-image" hidden>
-  <img src="./images/bg-desktop-light.jpg" alt="" class="bg-image">
+<body class="dark">
+  <img src="./images/bg-desktop-dark.jpg" alt="" class="bg-image" id="dark-bg">
+  <img src="./images/bg-desktop-light.jpg" alt="" class="bg-image" id="light-bg" hidden>
 
   <main>
     <div class="header">
       <h1>TODO</h1>
-      <button id="turn-to-dark" class="theme-toggle" aria-label="turn to dark theme">
+      <button id="turn-to-dark" class="theme-toggle" aria-label="turn to dark theme" hidden>
         <img src="./images/icon-moon.svg" alt="moon icon" class="moon-icon">
       </button>
-      <button id="turn-to-light" class="theme-toggle" aria-label="turn to light theme" hidden>
+      <button id="turn-to-light" class="theme-toggle" aria-label="turn to light theme">
         <img src="./images/icon-sun.svg" alt="sun icon" class="sun-icon" >
       </button>
     </div>
 
-    <div class ="input-area light">
+    <div class ="input-area dark">
         <button class="decorative-button" aria-label="Mark all todos as completed">
         </button>
-        <input type="text"  class="textcontent" placeholder="Create a new todo..."id="new-todo" aria-label="Create a new todo">
+        <input type="text"  id="new-todo" class="textcontent" placeholder="Create a new todo..." aria-label="Create a new todo">
     </div>
 
-    <div class="todo-list light"></div>
-
-    <div class="control-area light">
-      <span><!-- Add dynamic number --> items left</span>
-      <div class ="filter-buttons">
-        <button id ="all" class ="control-button light" aria-label ="View all todos">All</button>
-        <button id ="active" class ="control-button light" aria-label ="View active todos">Active</button>
-        <button id ="completed" class ="control-button light" aria-label ="View completed todos">Completed</button>
+    <div class="todo-list dark">
+      <div class="todo-item dark">
+        <button class="todo-item-completed-button" aria-label="Mark as completed">
+          <img src="./images/icon-check.svg" alt="check icon" class="todo-item-completed-icon" hidden>
+        </button>
+        <span class="todo-text dark">Buy groceries</span>
+        <button class="todo-item-delete-button" aria-label="Delete">
+          <img src="./images/icon-cross.svg" alt="cross icon" class="todo-item-delete-icon">
+        </button>
       </div>
-      <button class="control-button light" aria-label="Clear completed todos">Clear Completed</button>
+    </div>
+
+    <div class="control-area dark">
+      <span id="residual-items"><!-- Add dynamic number --> items left</span>
+      <div class ="filter-buttons">
+        <label for="all">
+          <input type="radio" name="filter" id ="all" class ="control-button dark" aria-label ="View all todos"></input>
+          <span class="dark">All</span>
+        </label>
+        <label for="active">
+          <input type="radio" name="filter" id ="active" class ="control-button dark" aria-label ="View active todos"></input>
+          <span class="dark">Active</span>
+        </label>
+        <label for="completed">
+          <input type="radio" name="filter" id ="completed" class ="control-button dark" aria-label ="View completed todos"></input>
+          <span class="dark">Completed</span>
+        </label>
+      </div>
+      <button class="control-button dark" id="clear-completed" aria-label="Clear completed todos">Clear Completed</button>
       </div>
   </main>
 

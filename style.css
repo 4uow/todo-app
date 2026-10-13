@@ -139,7 +139,6 @@ h1 {
 
 
 .textcontent {
-    height: 27px;
     flex: 1 1 0;
 }
 
@@ -176,6 +175,39 @@ h1 {
     gap: 16px;
 }
 
+.filter-buttons label {
+    position: relative;
+}
+
+.filter-buttons input[type="radio"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: none;
+}
+
+.filter-buttons label span {
+    cursor: pointer;
+    color: hsl(236, 9%, 61%);
+}
+
+.filter-buttons .dark:hover {
+    color: hsl(236, 33%, 92%);
+}
+
+.filter-buttons .light:hover {
+    color: hsl(236, 19%, 28%);
+}
+
+.filter-buttons input[type="radio"]:checked + span {
+    color: hsl(220, 98%, 61%);
+}
+
 .control-button {
     background: none;
     border: none;
@@ -196,4 +228,74 @@ h1 {
     font-size: 14px;
     font-weight: 400;
     margin-top: 60px;
+}
+
+.todo-item.dark {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: hsl(235, 24%, 19%);
+    border-radius: 4px;
+}
+
+.todo-item.light {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: hsl(0, 0%, 98%);
+    border-radius: 4px;
+}
+
+.todo-item-completed-button {
+    width: 27px;
+    height: 27px;
+    flex: 0 0 auto;
+    margin: 19px;
+    border-radius: 50%;
+    background: none;
+    border: 1px solid #4e5170;
+    cursor: pointer;
+}
+
+.todo-item-completed-button.completed {
+    width: 27px;
+    height: 27px;
+    flex: 0 0 auto;
+    margin: 19px;
+    border-radius: 50%;
+    background: linear-gradient(
+    to right,
+    hsl(192, 100%, 67%),
+    hsl(280, 87%, 65%));
+    border: 1px solid #4e5170;
+    cursor: pointer;
+}
+
+.todo-text.dark {
+    flex: 1 1 0;
+    color: hsl(236, 33%, 92%);
+}
+
+.todo-text.dark.completed {
+    flex: 1 1 0;
+    color: hsl(236, 9%, 61%);
+}
+
+.todo-text.light {
+    flex: 1 1 0;
+    color: #3C3D50;
+}
+
+.todo-text.light.completed {
+    flex: 1 1 0;
+    color: #3C3D50;
+}
+
+.todo-item-delete-button {
+    flex: 0 0 auto;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 17px;
+
 }
