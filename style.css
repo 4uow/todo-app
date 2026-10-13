@@ -191,16 +191,16 @@ h1 {
     border: none;
 }
 
-.filter-buttons label span {
+.control-button-text {
     cursor: pointer;
     color: hsl(236, 9%, 61%);
 }
 
-.filter-buttons .dark:hover {
+.control-button-text.dark:hover {
     color: hsl(236, 33%, 92%);
 }
 
-.filter-buttons .light:hover {
+.control-button-text.light:hover {
     color: hsl(236, 19%, 28%);
 }
 
@@ -228,6 +228,10 @@ h1 {
     font-size: 14px;
     font-weight: 400;
     margin-top: 60px;
+}
+
+.todo-item {
+    border-bottom: 1px solid hsl(233, 14%, 35%);
 }
 
 .todo-item.dark {
@@ -288,7 +292,7 @@ h1 {
 
 .todo-text.light.completed {
     flex: 1 1 0;
-    color: #3C3D50;
+    color: hsl(236, 9%, 61%);
 }
 
 .todo-item-delete-button {

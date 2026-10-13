@@ -11,12 +11,24 @@ const all = document.getElementById("all");
 const active = document.getElementById("active");
 const completed = document.getElementById("completed");
 const clearCompleted = document.querySelector("#clear-completed");
+const controlButtonsText = document.querySelectorAll(".control-button-text");
+const inputArea = document.querySelector(".input-area");
 
 function createDarkTodoItem(text) {
     const todoItem = document.createElement("div");
     const todoText = document.createElement("span");
     const todoItemcompletedButton = document.createElement("button");
     const todoItemDeleteButton = document.createElement("button");
+    const todoItemDeleteIcon = document.createElement("img");
+    const todoItemCompletedIcon = document.createElement("img");
+
+
+    todoItemCompletedIcon.src = "./images/icon-check.svg";
+    todoItemCompletedIcon.alt = "";
+    todoItemCompletedIcon.hidden = true;
+
+    todoItemDeleteIcon.src = "./images/icon-cross.svg";
+    todoItemDeleteIcon.alt = "";
 
     todoText.textContent = text;
     todoItemcompletedButton.setAttribute("aria-label", "Mark as completed");
@@ -24,13 +36,33 @@ function createDarkTodoItem(text) {
 
     todoList.append(todoItem);
     todoItem.append(todoItemcompletedButton, todoText, todoItemDeleteButton);
-    todoItem.classList.add("todo-item dark");
+    todoItemDeleteButton.append(todoItemDeleteIcon);
+    todoItemcompletedButton.append(todoItemCompletedIcon);
+    todoItem.classList.add("todo-item");
+    todoItem.classList.add("dark");
 
     todoItemcompletedButton.classList.add("todo-item-completed-button");
 
-    todoText.classList.add("todo-text dark");
+    todoText.classList.add("todo-text");
+    todoText.classList.add("dark");
 
     todoItemDeleteButton.classList.add("todo-item-delete-button");
+
+    todoItemDeleteIcon.classList.add("todo-item-delete-icon");
+    todoItemCompletedIcon.classList.add("todo-item-completed-icon");
+
+    todoItemDeleteButton.addEventListener("click", () => {
+        todoItem.remove();
+        update();
+    });
+
+    todoItemcompletedButton.addEventListener("click", () => {
+        todoItem.classList.toggle("completed");
+        todoItemcompletedButton.classList.toggle("completed");
+        todoItemCompletedIcon.hidden = !todoItemcompletedButton.classList.contains("completed");
+        todoText.classList.toggle("completed");
+        update();
+    });
 
 }
 
@@ -39,6 +71,8 @@ function createLightTodoItem(text) {
     const todoText = document.createElement("span");
     const todoItemcompletedButton = document.createElement("button");
     const todoItemDeleteButton = document.createElement("button");
+    const todoItemDeleteIcon = document.createElement("img");
+    const todoItemCompletedIcon = document.createElement("img");
 
     todoText.textContent = text;
     todoItemcompletedButton.setAttribute("aria-label", "Mark as completed");
@@ -46,13 +80,37 @@ function createLightTodoItem(text) {
 
     todoList.append(todoItem);
     todoItem.append(todoItemcompletedButton, todoText, todoItemDeleteButton);
-    todoItem.classList.add("todo-item light");
+    todoItemDeleteIcon.src = "./images/icon-cross.svg";
+    todoItemDeleteIcon.alt = "";
+    todoItemCompletedIcon.src = "./images/icon-check.svg";
+    todoItemCompletedIcon.alt = "";
+    todoItemCompletedIcon.hidden = true;
+
+    todoItem.classList.add("todo-item");
+    todoItem.classList.add("light");
 
     todoItemcompletedButton.classList.add("todo-item-completed-button");
 
-    todoText.classList.add("todo-text light");
+    todoText.classList.add("todo-text");
+    todoText.classList.add("light");
 
     todoItemDeleteButton.classList.add("todo-item-delete-button");
+
+    todoItemDeleteIcon.classList.add("todo-item-delete-icon");
+    todoItemCompletedIcon.classList.add("todo-item-completed-icon");
+
+    todoItemDeleteButton.addEventListener("click", () => {
+        todoItem.remove();
+        update();
+    });
+
+    todoItemcompletedButton.addEventListener("click", () => {
+        todoItem.classList.toggle("completed");
+        todoItemcompletedButton.classList.toggle("completed");
+        todoItemCompletedIcon.hidden = !todoItemcompletedButton.classList.contains("completed");
+        todoText.classList.toggle("completed");
+        update();
+    });
 
 }
 
@@ -62,22 +120,122 @@ function update() {
     residualItems.textContent = `${residual} items left`;
 
     todoItems.forEach((item) => {
-        const completedButton = item.querySelector(".todo-item-completed-button");
-        const deleteButton = item.querySelector(".todo-item-delete-button");
 
-        completedButton.addEventListener("click", () => {
-            item.classList.toggle("completed");
-            update();
-        });
+        if(all.checked) {
+            todoItems.forEach((item) => {
+                item.hidden = false;
+            });
+        }
 
-        deleteButton.addEventListener("click", () => {
-            item.remove();
-            update();
-        });
+        else if(active.checked) {
+            todoItems.forEach((item) => {
+                if(item.classList.contains("completed")) {
+                    item.hidden = true;
+                }
+            });
+        }
 
-        
+        else if(completed.checked) {
+            todoItems.forEach((item) => {
+                if(!item.classList.contains("completed")) {
+                    item.hidden = true;
+                }
+            });
+        }
 
     });
 
-    
 }
+
+all.addEventListener("change", () => {
+    update();
+});
+
+active.addEventListener("change", () => {
+    update();
+});
+
+completed.addEventListener("change", () => {
+    update();
+});
+
+clearCompleted.addEventListener("click",() => {
+    const todoItems = document.querySelectorAll(".todo-item");
+    todoItems.forEach((item) => {
+        if(item.classList.contains("completed")) {
+            item.remove();
+        }
+    });
+    update();
+});
+
+//moonbutton
+turnToDarkButton.addEventListener("click", () => {
+    body.classList.add("dark");
+    body.classList.remove("light");
+    darkBg.hidden = false;
+    lightBg.hidden = true;
+    turnToLightButton.hidden = false;
+    turnToDarkButton.hidden = true;
+    controlButtonsText.forEach((button) => {
+        button.classList.add("dark");
+        button.classList.remove("light");
+    });
+    inputArea.classList.add("dark");
+    inputArea.classList.remove("light");
+    todoList.classList.add("dark");
+    todoList.classList.remove("light");
+    controlArea.classList.add("dark");
+    controlArea.classList.remove("light");
+    const todoItems = document.querySelectorAll(".todo-item");
+    todoItems.forEach((item) => {
+        item.classList.add("dark");
+        item.classList.remove("light");
+        const todoText = item.querySelector(".todo-text");
+        todoText.classList.add("dark");
+        todoText.classList.remove("light");
+    });
+});
+
+//sunbutton
+turnToLightButton.addEventListener("click", () => {
+    body.classList.add("light");
+    body.classList.remove("dark");
+    darkBg.hidden = true;
+    lightBg.hidden = false;
+    turnToLightButton.hidden = true;
+    turnToDarkButton.hidden = false;
+    controlButtonsText.forEach((button) => {
+        button.classList.add("light");
+        button.classList.remove("dark");
+    });
+    inputArea.classList.add("light");
+    inputArea.classList.remove("dark");
+    todoList.classList.add("light");
+    todoList.classList.remove("dark");
+    controlArea.classList.add("light");
+    controlArea.classList.remove("dark");
+    const todoItems = document.querySelectorAll(".todo-item");
+    todoItems.forEach((item) => {
+        item.classList.add("light");
+        item.classList.remove("dark");
+        const todoText = item.querySelector(".todo-text");
+        todoText.classList.add("light");
+        todoText.classList.remove("dark");
+    });
+});
+
+todoInput.addEventListener("keydown", (event) => {
+    if(event.key === "Enter") {
+        const text = todoInput.value.trim();
+        if(text) {
+            if(body.classList.contains("dark")) {
+                createDarkTodoItem(text);
+            }else if(body.classList.contains("light")) {
+                createLightTodoItem(text);
+            }
+            todoInput.value = "";
+        }
+    }
+    update();
+});
