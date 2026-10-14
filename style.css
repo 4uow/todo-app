@@ -234,6 +234,10 @@ h1 {
     border-bottom: 1px solid hsl(233, 14%, 35%);
 }
 
+[hidden] {
+    display: none !important;
+}
+
 .todo-item.dark {
     width: 100%;
     display: flex;
@@ -303,3 +307,5 @@ h1 {
     margin-right: 17px;
 
 }
+
+

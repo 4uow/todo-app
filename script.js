@@ -78,13 +78,17 @@ function createLightTodoItem(text) {
     todoItemcompletedButton.setAttribute("aria-label", "Mark as completed");
     todoItemDeleteButton.setAttribute("aria-label", "Delete");
 
-    todoList.append(todoItem);
-    todoItem.append(todoItemcompletedButton, todoText, todoItemDeleteButton);
     todoItemDeleteIcon.src = "./images/icon-cross.svg";
     todoItemDeleteIcon.alt = "";
     todoItemCompletedIcon.src = "./images/icon-check.svg";
     todoItemCompletedIcon.alt = "";
     todoItemCompletedIcon.hidden = true;
+
+    todoList.append(todoItem);
+    todoItem.append(todoItemcompletedButton, todoText, todoItemDeleteButton);
+    todoItemDeleteButton.append(todoItemDeleteIcon);
+    todoItemcompletedButton.append(todoItemCompletedIcon);
+    
 
     todoItem.classList.add("todo-item");
     todoItem.classList.add("light");
@@ -116,34 +120,29 @@ function createLightTodoItem(text) {
 
 function update() {
     const todoItems = document.querySelectorAll(".todo-item");
-    const residual = todoItems.length;
+    const completedItems = document.querySelectorAll(".todo-item.completed");
+    const residual = todoItems.length - completedItems.length;
+
+
     residualItems.textContent = `${residual} items left`;
 
+    
     todoItems.forEach((item) => {
-
+        const iscompleted = item.classList.contains("completed");
         if(all.checked) {
-            todoItems.forEach((item) => {
-                item.hidden = false;
-            });
-        }
+            item.hidden = false;
+    }
 
         else if(active.checked) {
-            todoItems.forEach((item) => {
-                if(item.classList.contains("completed")) {
-                    item.hidden = true;
-                }
-            });
+            item.hidden = iscompleted
         }
 
         else if(completed.checked) {
-            todoItems.forEach((item) => {
-                if(!item.classList.contains("completed")) {
-                    item.hidden = true;
-                }
-            });
+            item.hidden = !iscompleted
         }
-
     });
+    
+
 
 }
 
