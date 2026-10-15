@@ -14,6 +14,7 @@ const clearCompleted = document.querySelector("#clear-completed");
 const controlButtonsText = document.querySelectorAll(".control-button-text");
 const inputArea = document.querySelector(".input-area");
 const filterButtons = document.querySelector(".filter-buttons");
+const clearCompletedButton = document.getElementById("clear-completed");
 
 function createDarkTodoItem(text) {
     const todoItem = document.createElement("div");
@@ -177,6 +178,8 @@ turnToDarkButton.addEventListener("click", () => {
     lightBg.hidden = true;
     turnToLightButton.hidden = false;
     turnToDarkButton.hidden = true;
+    clearCompletedButton.classList.add("dark");
+    clearCompletedButton.classList.remove("light");
     filterButtons.classList.add("dark");
     filterButtons.classList.remove("light");
     controlButtonsText.forEach((button) => {
@@ -207,6 +210,8 @@ turnToLightButton.addEventListener("click", () => {
     lightBg.hidden = false;
     turnToLightButton.hidden = true;
     turnToDarkButton.hidden = false;
+    clearCompletedButton.classList.add("light");
+    clearCompletedButton.classList.remove("dark");
     filterButtons.classList.add("light");
     filterButtons.classList.remove("dark");
     controlButtonsText.forEach((button) => {
@@ -239,7 +244,7 @@ todoInput.addEventListener("keydown", (event) => {
                 createLightTodoItem(text);
             }
             todoInput.value = "";
+            update();
         }
     }
-    update();
 });
