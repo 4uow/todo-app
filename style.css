@@ -170,9 +170,18 @@ h1 {
     border-radius: 0 0 4px 4px;
 }
 
-.filter-buttons {
+.filter-buttons.dark {
+    position: absolute;
     display: flex;
     gap: 16px;
+    top: 656px;
+}
+
+.filter-buttons.light {
+    position: absolute;
+    display: flex;
+    gap: 16px;
+    top: 656px;
 }
 
 .filter-buttons label {
@@ -287,6 +296,7 @@ h1 {
 .todo-text.dark.completed {
     flex: 1 1 0;
     color: hsl(236, 9%, 61%);
+    text-decoration: line-through;
 }
 
 .todo-text.light {
@@ -297,6 +307,7 @@ h1 {
 .todo-text.light.completed {
     flex: 1 1 0;
     color: hsl(236, 9%, 61%);
+    text-decoration: line-through;
 }
 
 .todo-item-delete-button {
@@ -308,4 +319,41 @@ h1 {
 
 }
 
+@media (max-width: 600px) {
+    main {
+        width: 90%;
+    }
 
+    .tip {
+            margin-top: 20px;
+    }
+
+    .filter-buttons.dark {
+        position: static;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 26px;
+        background-color: hsl(235, 24%, 19%);
+        margin-top: 16px;
+        height: 50px;
+        width: 90%;
+        border-radius: 4px;
+    }
+
+    .filter-buttons.light {
+    position: static;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    background-color: hsl(0, 0%, 98%);
+    margin-top: 16px;
+    height: 50px;
+    width: 90%;
+    border-radius: 4px;
+    box-shadow: 0px 0px 50px 5px rgba(215, 216, 236, 0.5);
+    }
+
+
+}
