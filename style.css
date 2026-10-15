@@ -84,11 +84,22 @@ h1 {
     border-radius: 4px;
 }
 
-.textcontent {
+.textcontent.dark {
     background-color: transparent;
     border: none;
     outline: none;
+    caret-color: #334A90;
+    color: hsl(236, 33%, 92%);
 }
+
+.textcontent.light {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    caret-color: #334A90;
+    color: hsl(236, 19%, 28%);
+}
+
 
 
 .todo-list.dark {
@@ -319,6 +330,8 @@ h1 {
     margin-right: 17px;
 
 }
+
+
 
 @media (max-width: 600px) {
     main {

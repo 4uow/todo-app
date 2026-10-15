@@ -15,6 +15,7 @@ const controlButtonsText = document.querySelectorAll(".control-button-text");
 const inputArea = document.querySelector(".input-area");
 const filterButtons = document.querySelector(".filter-buttons");
 const clearCompletedButton = document.getElementById("clear-completed");
+const textcontent = document.querySelector(".textcontent");
 
 function createDarkTodoItem(text) {
     const todoItem = document.createElement("div");
@@ -65,6 +66,8 @@ function createDarkTodoItem(text) {
         todoText.classList.toggle("completed");
         update();
     });
+
+    return todoItem;
 
 }
 
@@ -118,6 +121,50 @@ function createLightTodoItem(text) {
         update();
     });
 
+    return todoItem;
+
+}
+
+function saveTodos() {
+    const todos = [...todoList.querySelectorAll(".todo-item")].map((item) => ({
+        text: item.querySelector(".todo-text").textContent,
+        completed: item.classList.contains("completed"),
+    }));
+    localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+function loadTodos() {
+    let todos;
+
+    try {
+        todos = JSON.parse(localStorage.getItem("todos")??"[]");
+
+    }catch{
+        todos = [];
+    }
+
+    if(!Array.isArray(todos)) {
+        todos = [];
+    }
+
+    todos.forEach((todo) => {
+        if(!todo || typeof todo.text !== "string" || typeof todo.completed !== "boolean") {
+            return;
+        }
+
+        const item = body.classList.contains("dark") ? createDarkTodoItem(todo.text) : createLightTodoItem(todo.text);
+        if(todo.completed) {
+            item.classList.add("completed");
+            const completedButton = item.querySelector(".todo-item-completed-button");
+            completedButton.classList.add("completed");
+            const completedIcon = item.querySelector(".todo-item-completed-icon");
+            completedIcon.hidden = false;
+            const todoText = item.querySelector(".todo-text");
+            todoText.classList.add("completed");
+        }
+    });
+
+    update();
 }
 
 function update() {
@@ -144,7 +191,7 @@ function update() {
         }
     });
     
-
+    saveTodos();
 
 }
 
@@ -180,6 +227,8 @@ turnToDarkButton.addEventListener("click", () => {
     turnToDarkButton.hidden = true;
     clearCompletedButton.classList.add("dark");
     clearCompletedButton.classList.remove("light");
+    textcontent.classList.add("dark");
+    textcontent.classList.remove("light");
     filterButtons.classList.add("dark");
     filterButtons.classList.remove("light");
     controlButtonsText.forEach((button) => {
@@ -214,6 +263,8 @@ turnToLightButton.addEventListener("click", () => {
     clearCompletedButton.classList.remove("dark");
     filterButtons.classList.add("light");
     filterButtons.classList.remove("dark");
+    textcontent.classList.add("light");
+    textcontent.classList.remove("dark");
     controlButtonsText.forEach((button) => {
         button.classList.add("light");
         button.classList.remove("dark");
@@ -248,3 +299,5 @@ todoInput.addEventListener("keydown", (event) => {
         }
     }
 });
+
+loadTodos();
