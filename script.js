@@ -42,6 +42,7 @@ function createDarkTodoItem(text) {
     todoItemDeleteButton.append(todoItemDeleteIcon);
     todoItemcompletedButton.append(todoItemCompletedIcon);
     todoItem.classList.add("todo-item");
+    todoItem.draggable = true;
     todoItem.classList.add("dark");
 
     todoItemcompletedButton.classList.add("todo-item-completed-button");
@@ -96,6 +97,7 @@ function createLightTodoItem(text) {
     
 
     todoItem.classList.add("todo-item");
+    todoItem.draggable = true;
     todoItem.classList.add("light");
 
     todoItemcompletedButton.classList.add("todo-item-completed-button");
@@ -190,10 +192,66 @@ function update() {
             item.hidden = !iscompleted
         }
     });
-    
-    saveTodos();
 
+
+    saveTodos();
 }
+
+function getTodoAfterElement(container, y) {
+    const items = [...container.querySelectorAll(".todo-item:not(.dragging):not([hidden])")];
+
+    return items.reduce((closest,item) => {
+        const box = item.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+
+        if (offset < 0 && offset > closest.offset) {return { offset: offset, element: item };
+        }
+
+        else {return closest;}
+    },{offset: Number.NEGATIVE_INFINITY, element: null}).element;
+}
+
+let draggedTodo = null;
+
+todoList.addEventListener("dragstart", (event) => {
+    const item = event.target.closest(".todo-item");
+        
+    if(item) {
+        draggedTodo = item;
+        item.classList.add("dragging");
+
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", "");
+    }
+});
+
+todoList.addEventListener("dragover", (event) => {
+    event.preventDefault();
+
+    if(!draggedTodo) return;
+
+    const afterElement = getTodoAfterElement(todoList, event.clientY);
+
+    if (afterElement == null) {
+        todoList.appendChild(draggedTodo);
+    } else {
+        todoList.insertBefore(draggedTodo, afterElement);
+    }
+});
+
+todoList.addEventListener("drop", (event) => {
+    event.preventDefault();
+    update();
+});
+
+todoList.addEventListener("dragend", () => {
+    if(draggedTodo) {
+        draggedTodo.classList.remove("dragging");
+        draggedTodo = null;
+    }
+    update();
+});
+
 
 all.addEventListener("change", () => {
     update();

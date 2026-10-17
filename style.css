@@ -331,6 +331,17 @@ h1 {
 
 }
 
+.todo-item {
+    cursor: grab;
+}
+
+.todo-item:active {
+    cursor: grabbing;
+}
+
+.todo-item.dragging {
+    opacity: 0.5;
+}
 
 
 @media (max-width: 600px) {
